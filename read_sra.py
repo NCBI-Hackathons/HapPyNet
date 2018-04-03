@@ -26,11 +26,11 @@ def main():
         save_name = '%s_%s' %(options.prefix, save_name)
 
     #check log file:
-    log_file_name = '%s_%s.log' %(options.out_dir, save_name)
+    print (save_name)
+    log_file_name = '%s%s.log' %(options.out_dir, save_name)
 
-    log_file = open(log_file_name, 'a+')
-
-
+    log_file = open(log_file_name, "a+")
+    log_file.write('~~~~~~ started new run for : %s ~~~~~~~~\n' % save_name)
     if options.vcf != None:
         # TODO
         #process vcf file
