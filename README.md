@@ -5,7 +5,7 @@ Association of haplotype blocks to phenotypes using machine learning methods
 A tool to test the association of variants in haplotype blocks to phenotypes
 
 
-![alt text](concept.png)
+![alt text](docs/images/concept.png)
 
 <p align="center">
 <img src="./docs/images/pipeline_0.png" height="300">
