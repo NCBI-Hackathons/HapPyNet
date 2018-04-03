@@ -31,8 +31,5 @@ A tool to test the association of variants in haplotype blocks to phenotypes
    
 ## Association Tests
 
-<<<<<<< HEAD
    * We are exploring standard differential gene expression methods from Bioconductor
 ![alt text](eset.png)
-=======
->>>>>>> 7425e9ab25c3b8183966c597b7840aea963018e7
