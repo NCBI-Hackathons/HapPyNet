@@ -10,6 +10,17 @@ import tempfile
 import os
 
 
+#########################
+global ALIGN_THREADS
+global SORT_THREADS
+
+
+ALIGN_THREADS = 1
+SORT_THREADS = 1
+
+
+#########################
+
 def main():
     usage = 'usage: %prog [options] <SRA_id or vcf file>'
 
@@ -19,6 +30,8 @@ def main():
     parser.add_option('-v', dest = 'vcf', default=False,  action='store_true', help='VCF input file: %default]')
     parser.add_option('-s', dest = 'sra', default=False,  action='store_true', help='SRA_id: %default]')
     parser.add_option('-c', dest='clean', default=False, action='store_true', help='clean intermediate files: %default]')
+    parser.add_option('-b', dest = 'batch', default=False, action='store_true', help = 'generate counts for multiple samples' )
+    parser.add_option('-n', dest = 'nationality', default='EUR', type='str', help='nationality can be one of EUR, ASN, AFR [Default: %default]')
 
     ## TODO: add genome version and species
 
@@ -26,7 +39,7 @@ def main():
     (options,args) = parser.parse_args()
 
     if len(args) != 1:
-        parser.error('Must provide SRA id with -s or input vcf file using -v option')
+        parser.error('Must provide SRA id with -s or input vcf file using -v option, or -b for a list of samples to run')
     else:
         input_file = args[0] #or sra_file_path
         save_name = os.path.basename(input_file)
@@ -34,13 +47,8 @@ def main():
     if (not options.sra and not options.vcf):
         parser.error('Must provide input type using -v or -s')
 
-
     if not os.path.isdir(options.out_dir):
         os.mkdir(options.out_dir)
-
-
-    if options.prefix != None:
-        save_name = '%s_%s' %(options.prefix, save_name)
 
     out_dir = options.out_dir.strip('/') + '/' + save_name + '/'
     if not os.path.isdir(out_dir):
@@ -48,12 +56,16 @@ def main():
         print ('created %s' %out_dir)
 
 
-    runner(input_file, save_name, out_dir, options)
-
+    if options.batch:
+        samples = open(input_file, 'r')
+        samples_file = samples.readlines()
+        map(lambda x: runner(x.strip(), out_dir, options), samples_file)
+    else:
+        runner(input_file, out_dir, options)
 
     ###to do: clean after each run
 
-def runner(input_file, save_name, out_dir, options):
+def runner(input_file, out_dir, options):
 
     if options.sra:
         input_type = 'sra'
@@ -62,6 +74,11 @@ def runner(input_file, save_name, out_dir, options):
         input_type = 'vcf'
         vcf_run_stat = True
 
+    if options.prefix != None:
+        save_name = '%s_%s' %(options.prefix, input_file)
+    else:
+        save_name = input_file
+
     counts_dir = options.out_dir.strip('/') + '/' + 'counts'
     if not os.path.isdir(counts_dir):
         os.mkdir(counts_dir)
@@ -69,6 +86,16 @@ def runner(input_file, save_name, out_dir, options):
     naming_dic = set_naming_convention(save_name, out_dir, counts_dir)
     naming_dic['input_type'] = input_type
     naming_dic['input_file'] = input_file
+
+    if options.nationality == 'AFR':
+        naming_dic['nationality'] = 'AFR'
+        naming_dic['ld_blocks'] = '../ref_data/lddetect_GRCh38/AFR_ldetect.bed'
+    elif options.nationality == 'ASN':
+        naming_dic['nationality'] = 'ASN'
+        naming_dic['ld_blocks'] = '../ref_data/lddetect_GRCh38/ASN_ldetect.bed'
+    else:
+        naming_dic['nationality'] = 'EUR'
+        naming_dic['ld_blocks'] = '../ref_data/lddetect_GRCh38/EUR_ldetect.bed'
 
     if options.vcf:
         naming_dic['sorted_markd_recal_vcf'] = input_file
@@ -162,7 +189,7 @@ def check_file_existence(file_path, create=False):
     else:
         return False
 
-def set_naming_convention(save_name, out_dir, counts_dir):
+def set_naming_convention(save_name, out_dir, counts_dir, options):
     '''
     :param save_name:
     :return: a dictionary containing the expected file names in this pipeline if SRA file is inputted
@@ -192,7 +219,7 @@ def run_hisat(naming_dic):
         with tempfile.NamedTemporaryFile(dir=naming_dic['out_dir'], prefix=naming_dic['save_name'], suffix='tmp') as t:
             print (tempfile.mkstemp())
             print (tempfile.gettempdir())
-            hisat_cmd = 'hisat2 -p ${ALIGN_THREADS} -x /opt/grch38/Homo_sapiens_assembly38 --sra-acc %s --rg-id %s --rg SM:%s --rg PL:ILLUMINA| samtools sort -@ ${SORT_THREADS} > %s -T %s' %(naming_dic['input_file'], naming_dic['input_file'], naming_dic['input_file'], naming_dic['sorted_bam'], t)
+            hisat_cmd = 'hisat2 -p ${%s} -x /opt/grch38/Homo_sapiens_assembly38 --sra-acc %s --rg-id %s --rg SM:%s --rg PL:ILLUMINA| samtools sort -@ ${%s} > %s -T %s' %(ALIGN_THREADS, naming_dic['input_file'], naming_dic['input_file'], SORT_THREADS,naming_dic['input_file'], naming_dic['sorted_bam'], t)
             print (hisat_cmd)
             subprocess.call(hisat_cmd, shell=True)
 
@@ -224,7 +251,7 @@ def haplotype_caller(naming_dic):
 def bedtools_intersect(naming_dic):
 
     #'/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count'
-    cmd = '/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b %s -c | sort -k1,1V -k2,2n > %s' %(naming_dic['sorted_markd_recal_vcf'], naming_dic['ld_counts'])
+    cmd = '/home/ubuntu/bin/bedtools intersect -a %s -b %s -c | sort -k1,1V -k2,2n > %s' %(naming_dic['ld_blocks'],naming_dic['sorted_markd_recal_vcf'], naming_dic['ld_counts'])
     print (cmd)
     subprocess.call(cmd, shell=True)
 
