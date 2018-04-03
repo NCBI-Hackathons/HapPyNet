@@ -41,9 +41,11 @@ def main():
 
         print (sra_file, save_name)
         log_file.write('started running HISAT2 \n')
-        run_hisat(sra_file, options.out_dir)
+        bam_file = '%s%s.sort.bam' % (options.out_dir, save_name)
 
-        bam_file = '%s%s.sort.bam' %(options.out_dir, save_name)
+
+        if not os.path.exists(bam_file):
+            run_hisat(sra_file, options.out_dir)
 
         if not os.path.exists(bam_file):
             log_file.write('HISAT2 run was unsuccessfull\n')
