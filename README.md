@@ -6,7 +6,7 @@ A tool to test the association of variants in haplotype blocks to phenotypes
 
 
 <p align="center">
-<img src="./docs/images/pipeline_1.png" height="300">
+<img src="./docs/images/pipeline_0.png" height="300">
 </p>
 
 
