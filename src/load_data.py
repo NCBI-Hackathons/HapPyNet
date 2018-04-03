@@ -111,16 +111,28 @@ def runner(input_file, save_name, out_dir, options):
             log_file.write('Marking duplicates was unsuccessfull\n')
             raise NameError('Marking duplicates was unsucessful')
         ## ~~~~~~~~~~~~~~ BaseRecalibrator ~~~~~~~~~~~~~~
-
         base_recalibrator(naming_dic)
+
+        if not check_file_existence(file_path=naming_dic['sorted_markd_recal_table']):
+            log_file.write('base recalibration was unsuccessfull\n')
+            raise NameError('base recalibration was unsucessful')
 
         ## ~~~~~~~~~~~~~~ PrintReads ~~~~~~~~~~~~~~
 
         print_reads(naming_dic)
 
+        if not check_file_existence(file_path=naming_dic['sorted_markd_recal_bam']):
+            log_file.write('printing reads was unsuccessfull\n')
+            raise NameError('printing reads was unsucessful')
+
         ## ~~~~~~~~~~~~~~ HaplotypeCaller ~~~~~~~~~~~~~~
 
         haplotype_caller(naming_dic)
+        if not check_file_existence(file_path=naming_dic['sorted_markd_recal_vcf']):
+            log_file.write('Haplotype calling was unsuccessfull\n')
+            raise NameError('Haplotype calling was unsucessful')
+
+        #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``
 
         vcf_run_stat = True
 
@@ -128,7 +140,11 @@ def runner(input_file, save_name, out_dir, options):
     if vcf_run_stat:
         ### steps after having a VCF file
         bedtools_intersect(naming_dic)
+        if not check_file_existence(file_path=naming_dic['ld_counts']):
+            log_file.write('Generating LD counts was unsuccessfull\n')
+            raise NameError('Generating LD counts was unsucessful')
 
+    ### ~~~~~~~~~~~~~~~~~
 
 def check_file_existence(file_path, create=False):
     if os.path.exists(file_path):
@@ -146,15 +162,7 @@ def check_file_existence(file_path, create=False):
 def set_naming_convention(save_name, out_dir):
     '''
     :param save_name:
-    :return:
-
-    #
-    # ${SRR}.sort.bam
-    # ${SRR}.sort.markd.bam - -METRICS_FILE ${SRR}.sort.markd.metrics.bam
-    # ${SRR}.sort.markd.recal.table
-    # ${SRR}.sort.markd.recal.bam
-    # ${SRR}.sort.markd.recal.vcf.gz
-
+    :return: a dictionary containing the expected file names in this pipeline if SRA file is inputted
     '''
     naming_dic = {
         'save_name': save_name,
@@ -171,7 +179,6 @@ def set_naming_convention(save_name, out_dir):
     }
 
     return (naming_dic)
-
 
 
 def run_hisat(naming_dic):
