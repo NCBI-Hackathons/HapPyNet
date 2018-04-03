@@ -56,7 +56,7 @@ def main():
         print ('created %s' %out_dir)
 
 
-    if options.batch != None:
+    if options.batch:
         samples = open(input_file, 'r')
         samples_file = samples.readlines()
         map(lambda x: runner(x.strip(), out_dir, options), samples_file)
