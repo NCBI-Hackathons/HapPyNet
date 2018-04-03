@@ -19,6 +19,7 @@ def main():
     parser.add_option('-v', dest = 'vcf', default=False,  action='store_true', help='VCF input file: %default]')
     parser.add_option('-s', dest = 'sra', default=False,  action='store_true', help='SRA_id: %default]')
     parser.add_option('-c', dest='clean', default=False, action='store_true', help='clean intermediate files: %default]')
+    parser.add_option('-b', dest = 'batch', default=False, action='store_true', help = 'generate counts for multiple samples' )
 
     ## TODO: add genome version and species
 
@@ -26,7 +27,7 @@ def main():
     (options,args) = parser.parse_args()
 
     if len(args) != 1:
-        parser.error('Must provide SRA id with -s or input vcf file using -v option')
+        parser.error('Must provide SRA id with -s or input vcf file using -v option, or -b for a list of samples to run')
     else:
         input_file = args[0] #or sra_file_path
         save_name = os.path.basename(input_file)
@@ -34,13 +35,8 @@ def main():
     if (not options.sra and not options.vcf):
         parser.error('Must provide input type using -v or -s')
 
-
     if not os.path.isdir(options.out_dir):
         os.mkdir(options.out_dir)
-
-
-    if options.prefix != None:
-        save_name = '%s_%s' %(options.prefix, save_name)
 
     out_dir = options.out_dir.strip('/') + '/' + save_name + '/'
     if not os.path.isdir(out_dir):
@@ -48,12 +44,16 @@ def main():
         print ('created %s' %out_dir)
 
 
-    runner(input_file, save_name, out_dir, options)
-
+    if options.batch != None:
+        samples = open(input_file, 'r')
+        samples_file = samples.readlines()
+        map(lambda x: runner(x.strip(), out_dir, options), samples_file)
+    else:
+        runner(input_file, out_dir, options)
 
     ###to do: clean after each run
 
-def runner(input_file, save_name, out_dir, options):
+def runner(input_file, out_dir, options):
 
     if options.sra:
         input_type = 'sra'
@@ -61,6 +61,11 @@ def runner(input_file, save_name, out_dir, options):
     elif options.vcf:
         input_type = 'vcf'
         vcf_run_stat = True
+
+    if options.prefix != None:
+        save_name = '%s_%s' %(options.prefix, input_file)
+    else:
+        save_name = input_file
 
     counts_dir = options.out_dir.strip('/') + '/' + 'counts'
     if not os.path.isdir(counts_dir):
