@@ -1,6 +1,8 @@
-# HOWTO run load_dat.py on your data
+# HOWTO run generate_ld_counts.py
 
 ## Requirements
+
+  All tools should be included in the ${PATH} variable. Support for custom tool location and auto-discovery will be added at a later date
 
   * [bedtools](http://bedtools.readthedocs.io/en/latest/index.html)
 
