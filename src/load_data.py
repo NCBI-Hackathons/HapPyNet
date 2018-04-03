@@ -53,53 +53,6 @@ def main():
 #   runner(input_file, save_name, options)
   #  run_hisat(naming_dic)
 
-
-    #map(lambda x: print (check_file_existence(out_dir,  file_name=x, create=False)), naming_dic.keys())
-
-    #runner(sra_file, save_name, options)
-    # log_file_name = '%s%s.log' %(options.out_dir, save_name)
-    #
-    # log_file = open(log_file_name, "a+")
-    # log_file.write('~~~~~~ started new run for : %s ~~~~~~~~\n' % save_name)
-    #
-    # # TODO clean after each successful run
-    #
-    # if options.vcf != None:
-    #     # TODO
-    #     #process vcf file
-    #     pass
-    # else:
-    #     log_file.write(save_name)
-    #     log_file.write("\n")
-    #
-    #     print (sra_file, save_name)
-    #     log_file.write('started running HISAT2 \n')
-    #     bam_file = '%s%s.sort.bam' % (options.out_dir, save_name)
-    #
-    #     #### ~~~~~~~~~~~~~~ run HISAT2 ~~~~~~~~~~~~~~~~~~~
-    #     if not os.path.exists(bam_file):
-    #         run_hisat(sra_file, save_name, options.out_dir)
-    #
-    #     if not os.path.exists(bam_file):
-    #         log_file.write('HISAT2 run was unsuccessfull\n')
-    #         raise NameError('HISAT2 run was  unsuccessfull')
-    #     else:
-    #         log_file.write('HISAT2 finished succesfuly\n')
-    #
-    #     ### ~~~~~~~~~~~~~~ mark_duplicates ~~~~~~~~~~~~~~
-    #     log_file.write('started running GATK \n')
-    #     mark_duplicates(save_name, options.out_dir)
-    #     log_file.write('finished running GATK \n')
-    #
-    #     ## ~~~~~~~~~~~~~~ BaseRecalibrator ~~~~~~~~~~~~~~
-    #
-    #
-    #     ## ~~~~~~~~~~~~~~ PrintReads ~~~~~~~~~~~~~~
-    #
-    #
-    #     ## ~~~~~~~~~~~~~~ HaplotypeCaller ~~~~~~~~~~~~~~
-    #
-
     ###to do: clean after each run
 
 def runner(input_file, save_name, out_dir, options):
@@ -157,12 +110,15 @@ def runner(input_file, save_name, out_dir, options):
             log_file.write('Marking duplicates was unsuccessfull\n')
             raise NameError('Marking duplicates was unsucessful')
         ## ~~~~~~~~~~~~~~ BaseRecalibrator ~~~~~~~~~~~~~~
+
         base_recalibrator(naming_dic)
 
         ## ~~~~~~~~~~~~~~ PrintReads ~~~~~~~~~~~~~~
+
         print_reads(naming_dic)
 
         ## ~~~~~~~~~~~~~~ HaplotypeCaller ~~~~~~~~~~~~~~
+
         haplotype_caller(naming_dic)
 
         ##~~~~~~~~~~~~~~ Bedtools intersect ~~~~~~~~~~~~
@@ -207,7 +163,10 @@ def set_naming_convention(save_name, out_dir):
         'sorted_marked_metrics': '%s%s.sort.markd.metrics.bam' %(out_dir, save_name),
         'sorted_markd_recal_table':  '%s%s.sort.markd.recal.table' %(out_dir,save_name),
         'sorted_markd_recal_bam': '%s%s.sort.markd.recal.bam' %(out_dir,save_name),
-        'sorted_markd_recal_vcf': '%s%s.sort.markd.recal.vcf.gz' %(out_dir,save_name)}
+        'sorted_markd_recal_vcf': '%s%s.sort.markd.recal.vcf.gz' %(out_dir,save_name),
+        'ld_counts': '%s%s.ld_counts' %(out_dir,save_name)
+
+    }
 
     return (naming_dic)
 
@@ -232,7 +191,6 @@ def mark_duplicates(naming_dic):
         print (cmd)
      #   subprocess.call(cmd, shell=True)
 def base_recalibrator(naming_dic):
-    pass
     ## BaseRecalibrator
     #/opt/gatk-4.0.3.0/gatk BaseRecalibrator -R /opt/grch38/Homo_sapiens_assembly38.fasta --known-sites /opt/grch38/dbsnp_138.hg38.vcf.gz --known-sites /opt/grch38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz -I ${SRR}.sort.markd.bam -O ${SRR}.sort.markd.recal.table
     cmd = '/opt/gatk-4.0.3.0/gatk BaseRecalibrator -R /opt/grch38/Homo_sapiens_assembly38.fasta --known-sites /opt/grch38/dbsnp_138.hg38.vcf.gz --known-sites /opt/grch38/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz -I %s -O %s' %(naming_dic['sorted_marked_bam'], naming_dic['sorted_markd_recal_table'])
@@ -241,21 +199,31 @@ def base_recalibrator(naming_dic):
 
 
 def print_reads(naming_dic):
-    pass
     #/opt/gatk-4.0.3.0/gatk ApplyBQSR -R /opt/grch38/Homo_sapiens_assembly38.fasta -I ${SRR}.sort.markd.bam --bqsr-recal-file ${SRR}.sort.markd.recal.table -O ${SRR}.sort.markd.recal.bam
-
+    cmd = '/opt/gatk-4.0.3.0/gatk ApplyBQSR -R /opt/grch38/Homo_sapiens_assembly38.fasta -I %s --bqsr-recal-file %s -O %s'%(naming_dic['sorted_markd_bam'],naming_dic['sorted_markd_recal_table'],naming_dic['sorted_markd_recal_bam'])
+    print (cmd)
+#    subprocess.call(cmd, shell=True)
 
 def haplotype_caller(naming_dic):
-    pass
     #/opt/gatk-4.0.3.0/gatk HaplotypeCaller -R /opt/grch38/Homo_sapiens_assembly38.fasta --dbsnp /opt/grch38/dbsnp_138.hg38.vcf.gz -I ${SRR}.sort.markd.recal.bam -O ${SRR}.sort.markd.recal.vcf.gz
+    cmd = '/opt/gatk-4.0.3.0/gatk HaplotypeCaller -R /opt/grch38/Homo_sapiens_assembly38.fasta --dbsnp /opt/grch38/dbsnp_138.hg38.vcf.gz -I %s -O %s' %(naming_dic['sorted_markd_recal_bam'],naming_dic['sorted_markd_recal_vcf'])
+    print (cmd)
+#    subprocess.call(cmd, shell=True)
 
 
 def bedtools_intersect(naming_dic):
     pass
     #'/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count'
-    cmd = '/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count'
+    cmd = '/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b %s -c | sort -k1,1V -k2,2n > %s' %(naming_dic['sorted_markd_recal_vcf'
+                                                                                                                                               ''
+                                                                                                                                               ''
+                                                                                                                                               ''], naming_dic['ld_counts'])
+    print (cmd)
+    #    subprocess.call(cmd, shell=True)
+
 # __main__
 ################################################################################
+
 if __name__ == '__main__':
     main()
 
