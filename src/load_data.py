@@ -44,13 +44,13 @@ def main():
     #check log file:
  #   print (save_name)
 
-    naming_dic = set_naming_convention(save_name, out_dir)
-    naming_dic['input_file'] = input_file
-    print (naming_dic)
-
+    # naming_dic = set_naming_convention(save_name, out_dir)
+    # naming_dic['input_file'] = input_file
+    # print (naming_dic)
+    #
     ###
 
-#   runner(input_file, save_name, options)
+    runner(input_file, save_name, options)
   #  run_hisat(naming_dic)
 
     ###to do: clean after each run
@@ -64,22 +64,23 @@ def runner(input_file, save_name, out_dir, options):
         input_type = 'vcf'
         vcf_run_stat = True
 
+
     naming_dic = set_naming_convention(save_name)
     naming_dic['input_type'] = input_type
 
+    if options.vcf:
+        naming_dic['sorted_markd_recal_vcf'] = input_file
     #    print (naming_dic)
     check_file_existence(file_path=naming_dic['log_file'], create=True)
 
     log_file = open(out_dir + naming_dic['log_file'])
     log_file.write('~~~~~~ started new run for : %s ~~~~~~~~\n' % save_name)
 
-
     # TODO clean after each successful run
     if options.vcf != None:
         # TODO
-        # process vcf file
+        # process vcf file via bedtools intersect
         vcf_run_stat = True
-        pass
     else:
         ### do steps to create SRA file from SRA id
         log_file.write(save_name)
@@ -121,11 +122,12 @@ def runner(input_file, save_name, out_dir, options):
 
         haplotype_caller(naming_dic)
 
-        ##~~~~~~~~~~~~~~ Bedtools intersect ~~~~~~~~~~~~
+        vcf_run_stat = True
 
+    ##~~~~~~~~~~~~~~ Bedtools intersect ~~~~~~~~~~~~
     if vcf_run_stat:
         ### steps after having a VCF file
-        pass
+        bedtools_intersect(naming_dic)
 
 
 def check_file_existence(file_path, create=False):
@@ -212,12 +214,9 @@ def haplotype_caller(naming_dic):
 
 
 def bedtools_intersect(naming_dic):
-    pass
+
     #'/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count'
-    cmd = '/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b %s -c | sort -k1,1V -k2,2n > %s' %(naming_dic['sorted_markd_recal_vcf'
-                                                                                                                                               ''
-                                                                                                                                               ''
-                                                                                                                                               ''], naming_dic['ld_counts'])
+    cmd = '/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b %s -c | sort -k1,1V -k2,2n > %s' %(naming_dic['sorted_markd_recal_vcf'], naming_dic['ld_counts'])
     print (cmd)
     #    subprocess.call(cmd, shell=True)
 
