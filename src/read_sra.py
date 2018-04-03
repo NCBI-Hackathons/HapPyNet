@@ -45,7 +45,7 @@ def main():
 
 
         if not os.path.exists(bam_file):
-            run_hisat(sra_file, save_name, options.out_dir)
+            run_hisat(sra_file,save_name , options.out_dir)
 
         if not os.path.exists(bam_file):
             log_file.write('HISAT2 run was unsuccessfull\n')
@@ -64,12 +64,12 @@ def run_hisat(sra_path, save_name  ='', out_dir = './'):
 
         cmd = 'hisat2 -p 8 -x /opt/grch38/genome --sra-acc %s | samtools sort -@ 4 > %s%s.sort.bam' %(sra_path, out_dir, save_name)
         print (cmd)
-     #   subprocess.call(cmd, shell=True)
+        subprocess.call(cmd, shell=True)
 
 def run_GATK(save_name = '', out_dir = './'):
         cmd = '/opt/gatk-4.0.3.0/gatk MarkDuplicates --INPUT %s%s.sort.bam --OUTPUT %s%s.sort.markd.bam --METRICS_FILE %s%s.markd.metrics.bam' %(out_dir, save_name, out_dir, save_name, out_dir, save_name)
         print (cmd)
-     #   subprocess.call(cmd, shell=True)
+        subprocess.call(cmd, shell=True)
 # __main__
 ################################################################################
 if __name__ == '__main__':
@@ -77,4 +77,3 @@ if __name__ == '__main__':
 
 
 ## for parallel running:
-#parallel -j8 'echo {}' ::: $(seq 1 10)
