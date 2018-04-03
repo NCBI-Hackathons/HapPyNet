@@ -29,5 +29,5 @@ rmdir ${TMPDIR}
 /opt/gatk-4.0.3.0/gatk HaplotypeCaller -R /opt/grch38/Homo_sapiens_assembly38.fasta --dbsnp /opt/grch38/dbsnp_138.hg38.vcf.gz -I ${SRR}.sort.markd.recal.bam -O ${SRR}.sort.markd.recal.vcf.gz
 
 # Bedtools intersect
-/home/ubuntu/bin/bedtools intersect -a /home/ubuntu/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count
+/home/ubuntu/bin/bedtools intersect -a /opt/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count
 
