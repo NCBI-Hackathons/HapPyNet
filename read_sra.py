@@ -45,7 +45,7 @@ def main():
 
 
         if not os.path.exists(bam_file):
-            run_hisat(sra_file, options.out_dir)
+            run_hisat(sra_file, save_name, options.out_dir)
 
         if not os.path.exists(bam_file):
             log_file.write('HISAT2 run was unsuccessfull\n')
@@ -54,7 +54,7 @@ def main():
             log_file.write('HISAT2 finished succesfuly\n')
 
         log_file.write('started running GATK \n')
-        run_GATK(bam_file, options.out_dir)
+        run_GATK(save_name, options.out_dir)
         log_file.write('finished running GATK \n')
 
     ###to do: clean after each run
@@ -77,3 +77,4 @@ if __name__ == '__main__':
 
 
 ## for parallel running:
+#parallel -j8 'echo {}' ::: $(seq 1 10)
