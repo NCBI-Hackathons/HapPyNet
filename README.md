@@ -2,14 +2,25 @@
 
 Association of haplotype blocks to phenotypes using machine learning methods
 
-A tool to test the association of variants in haplotype blocks to phenotypes
-
+A tool to test the association of variants in haplotype blocks to phenotypes.
+This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPArrays in VCF format and generates association test results
 
 ![alt text](docs/images/concept.png)
 
 <p align="center">
 <img src="./docs/images/pipeline_0.png" height="300">
 </p>
+
+## Usage
+
+   * Step 1 : Generate SNP count matrix (Number of SNPs per LD block)
+   python src/load_data.py [options] <SRA_id or vcf file>
+   options: 
+   -o outdir
+   -i sample.vcf
+   -s sample.sra
+   -c 
+   * Step 2 :
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
