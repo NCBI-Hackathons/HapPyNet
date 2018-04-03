@@ -13,3 +13,15 @@
   * [gatk](https://software.broadinstitute.org/gatk/download/)
 
 ## Usage
+
+### Using SRA data as input
+
+#### Run with one SRA sample
+  * `python generate_ld_counts.py -s SRR#######`
+
+#### Run with many SRA samples
+  * `python generate_ld_counts.py -b input.list`
+  * input.list should have 1 SRA ID per line
+
+#### Run with an existing .vcf or .vcf.gz file
+  * `python generate_ld_counts.py -v file.vcf`
