@@ -4,13 +4,17 @@ Association of haplotype blocks to phenotypes using machine learning methods
 
 A tool to test the association of variants in haplotype blocks to phenotypes
 
+
 ![alt text](concept.png)
+
+<p align="center">
+<img src="./docs/images/pipeline_0.png" height="300">
+</p>
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
    * Group variants by haplotype blocks to compute SNP load in each haplotype block
    * Associate haplotypes with phenotype ...
-   * 
 
 ![alt text](flow.png)
 
@@ -27,4 +31,3 @@ A tool to test the association of variants in haplotype blocks to phenotypes
    
 ## Association Tests
 
-   * 
