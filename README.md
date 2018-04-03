@@ -13,14 +13,15 @@ This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPA
 
 ## Usage
 
-   * Step 1 : Generate SNP count matrix (Number of SNPs per LD block)
-   python src/load_data.py [options] <SRA_id or vcf file>
-   options: 
-   -o outdir
-   -i sample.vcf
-   -s sample.sra
+   * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
+   python src/load_data.py [options] <SRA_id or vcf file> \
+   options: \
+   -o outdir \
+   -i sample.vcf \
+   -s sample.sra \
    -c 
-   * Step 2 :
+
+   * Step 2 : Differential LD block SNP load
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
