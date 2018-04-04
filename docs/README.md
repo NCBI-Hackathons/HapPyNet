@@ -16,6 +16,7 @@
     * .hts files must be generated with `hisat2-build Homo_sapiens_assembly38.fasta`
 
 ## Usage
+  * `generate_ld_counts.py` must be run from the `HapPyNet/src` directory, or things will break. We will fix this later, I promise
 
 ### Using SRA data as input
 
@@ -35,4 +36,8 @@
   
 ## Expected Output
   * One directory per sample (e.g. `../results/SRR#######`) containing all files from alignments to .vcf.gz for that sample
-  * One directory (`../results/counts`) with .count files containing variant counts per haplotype block
+  * One directory (`../results/counts`) with .count files containing variant counts per haplotype block, before filtering (useful for QC)
+  
+## Additional Steps
+  * Run `filter_vcfs.sh` from the `../results/` directory to perform stricter filtering of VCFs, and to generate .count files for use with Step 2
+
