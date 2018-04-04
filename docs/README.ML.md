@@ -2,10 +2,10 @@
 
 ## Requirements
 
-   * TensorFlow
+   * TensorFlow \
    *pip3 install tensorflow*
 
-   * Jupyter Notebook
+   * Jupyter Notebook \
    *pip3 install jupyter*
 
 ## Usage
