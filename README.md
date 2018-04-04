@@ -14,7 +14,7 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
      See README [here](docs/README.md)
    * Step 2 : Run a neural net to classify samples into disease vs. normal \
-     *jupyter notebook training.ipynb*
+     See README [here](docs/README.ML.md)
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
