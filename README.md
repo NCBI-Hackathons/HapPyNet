@@ -4,18 +4,18 @@
 <hr>
 
 
-Association of __**Hap**__lotype blocks to phenotypes using a neural __**net**__work machine learning method (in __**Py**__thon)
+Association of **Hap**lotype blocks to phenotypes using a neural **net**work machine learning method (in **Py**thon)
 
 A tool to test the association of variants in haplotype blocks to phenotypes.
 This tool takes variants (VCF format) called by any technolgy like Exome, WGS, RNASeq or SNP Genotyping Arrays and generates association test results.
+
+![alt text](docs/images/concept.png)
 
 ## Usage
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
      See README [here](docs/README.md)
    * Step 2 : Run a neural net to classify samples into disease vs. normal \
      See README [here](docs/README.ML.md)
-
-![alt text](docs/images/concept.png)
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
@@ -39,10 +39,15 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 ## Machine Learning
 
-   * We trained a classifier with a 4 layer NeuralNet using TensorFlow with leave-one-out cross validation resulting in 99% accuracy of our model!
+   * We trained a classifier with a 4 layer NeuralNet using TensorFlow with leave-one-out cross validation.
 
    ![alt text](docs/images/simple_neural_network_header.jpg)
 
-   Here' the confusion matrix:
-   * We are exploring standard differential gene expression methods from Bioconductor
-![alt text](docs/images/eset.png)
+## Results
+
+   Our classifier model showed a 99% cross validated accuracy!
+
+## Next steps
+   * Rerun on a large set of samples, with demographics and batch controlled normals
+   * Explore standard differential gene expression methods from Bioconductor
+   * Explore other normalization methods for Haplotype length and number of SNPs in samples
