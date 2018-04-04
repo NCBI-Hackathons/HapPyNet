@@ -4,18 +4,18 @@
 <hr>
 
 
-Association of **Hap**lotype blocks to phenotypes using a neural **net**work machine learning method (in **Py**thon)
+Association of __Hap__lotype blocks to phenotypes (in __Py__thon) using a neural __net__work machine learning method
 
 A tool to test the association of variants in haplotype blocks to phenotypes.
 This tool takes variants (VCF format) called by any technolgy like Exome, WGS, RNASeq or SNP Genotyping Arrays and generates association test results.
-
-![alt text](docs/images/concept.png)
 
 ## Usage
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
      See README [here](docs/README.md)
    * Step 2 : Run a neural net to classify samples into disease vs. normal \
      See README [here](docs/README.ML.md)
+
+![alt text](docs/images/concept.png)
 
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
