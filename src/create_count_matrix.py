@@ -9,7 +9,7 @@ COUNT_FILE_EXTENSION = '.count'
 COUNT_FILE_COLUMNS = ['chr', 'start', 'stop', 'count']
 # Used to recover filename from input path.
 # Must extend if you use input other than SRR.
-EXPECTED_FILE_PREFIXES = ['SRR']
+EXPECTED_FILE_PREFIXES = ['SRR', 'ERR']
 
 
 def get_args():
@@ -59,7 +59,7 @@ def load_df(f):
 
 def parse_filename(filename):
     p = re.compile(
-        '([{}]\w+)\{}'.format(
+        '([{}]{3}\w+)\{}'.format(
             '|'.join(EXPECTED_FILE_PREFIXES),
             COUNT_FILE_EXTENSION
         )
