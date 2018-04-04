@@ -9,7 +9,7 @@ Association of **Hap**lotype blocks to phenotypes (in **Py**thon) using a neural
 A tool to test the association of variants in haplotype blocks to phenotypes.
 This tool takes variants (VCF format) called by any technolgy like Exome, WGS, RNASeq or SNP Genotyping Arrays and generates association test results.
 
-[Slides](https://docs.google.com/presentation/d/1mDAG509Ws1NSq7yGIEN6PMi6xeDpaBfiUjAW1mVI2QU/edit#slide=id.g36ae1cf8e4_0_38) from our presentation at [UCSC NCBI Hackathon](https://ncbiinsights.ncbi.nlm.nih.gov/2018/03/02/ncbi-ucsc-genomics-hackathon-april-2018/
+[Slides](https://docs.google.com/presentation/d/1mDAG509Ws1NSq7yGIEN6PMi6xeDpaBfiUjAW1mVI2QU/edit#slide=id.g36ae1cf8e4_0_38) from our presentation at [UCSC NCBI Hackathon](https://ncbiinsights.ncbi.nlm.nih.gov/2018/03/02/ncbi-ucsc-genomics-hackathon-april-2018/)
 
 ## Usage
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
