@@ -1,4 +1,6 @@
-<center><img src="docs/images/logo_0.png" height="100"></center>
+<p align="center">
+<img src="docs/images/logo_0.png" height="100">
+</p>
 
 
 Association of **Hap**lotype blocks to phenotypes using a neural **net**work machine learning method (in **Py**thon)
