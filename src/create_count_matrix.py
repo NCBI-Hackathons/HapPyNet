@@ -59,7 +59,7 @@ def load_df(f):
 
 def parse_filename(filename):
     p = re.compile(
-        '([{}]{3}\w+)\{}'.format(
+        '([{}]{{3}}\w+)\{}'.format(
             '|'.join(EXPECTED_FILE_PREFIXES),
             COUNT_FILE_EXTENSION
         )
