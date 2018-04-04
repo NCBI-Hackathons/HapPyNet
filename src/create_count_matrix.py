@@ -101,8 +101,15 @@ def combine_dfs(dfs):
         if not d[1]['count'].isnull().all()
     ]
     dfs = pd.concat(dfs, axis=1)
+    return dfs[[c for c in dfs.columns if 'count' in c]]
+
+
+def create_ld_blocks_from_index(dfs):
+    '''
+    Uses index to create LD block numbers.
+    '''
     return rename_column(
-        dfs[[c for c in dfs.columns if 'count' in c]].reset_index(),
+        dfs.reset_index(),
         'index',
         'ld_block',
         append=''
@@ -139,6 +146,7 @@ def main():
     if args.standardize:
         matrix = standardize_by_blocks(matrix)
         args.output_tag += '_standardized'
+    matrix = create_ld_blocks_from_index(matrix)
     output_matrix(matrix, args.output_tag)
 
 
