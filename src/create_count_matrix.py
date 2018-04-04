@@ -102,7 +102,7 @@ def combine_dfs(dfs):
 
 def output_matrix(matrix, tag):
     name = 'haplo_phen_count_matrix{}.tsv'.format(tag)
-    matrix.to_csv('haplo_phen_count_matrix{}.tsv'.format(tag), sep='\t', index=False)
+    matrix.to_csv(name, sep='\t', index=False)
     print('Created {}'.format(name))
 
 
