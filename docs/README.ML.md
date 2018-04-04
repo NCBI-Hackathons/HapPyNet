@@ -6,5 +6,5 @@
    *pip3 install tensorflow*
 
 ## Usage
-   *jupyter notebook training.ipynb*
+   *jupyter notebook training.ipynb(training.ipynb)*
 
