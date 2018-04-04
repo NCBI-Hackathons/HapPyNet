@@ -9,5 +9,5 @@
    *pip3 install jupyter*
 
 ## Usage
-   jupyter notebook [training.ipynb](training.ipynb)
+   jupyter notebook [training.ipynb](../training.ipynb)
 
