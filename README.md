@@ -4,7 +4,7 @@
 <hr>
 
 
-Association of __Hap__lotype blocks to phenotypes (in __Py__thon) using a neural __net__work machine learning method
+Association of **Hap**lotype blocks to phenotypes (in **Py**thon) using a neural **net**work machine learning method
 
 A tool to test the association of variants in haplotype blocks to phenotypes.
 This tool takes variants (VCF format) called by any technolgy like Exome, WGS, RNASeq or SNP Genotyping Arrays and generates association test results.
