@@ -1,10 +1,13 @@
 #!/bin/bash
 
+# Quick-and-dirty demonstration script written in bash
+# Used to run the RNAseq pipeline for some test samples, due to time constraints
+
 if [ $# -lt 1 ]; then
     exit 1
 fi
 
-ALIGN_THREADS=12
+ALIGN_THREADS=4
 SORT_THREADS=3
 
 SRR="${1}"
@@ -31,3 +34,4 @@ rmdir ${TMPDIR}
 # Bedtools intersect
 /home/ubuntu/bin/bedtools intersect -a /opt/ldetect_GRCh38/EUR_ldetect.bed -b ${SRR}.sort.markd.recal.vcf.gz -c | sort -k1,1V -k2,2n > ${SRR}.count
 
+exit 0
