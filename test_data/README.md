@@ -1,43 +1,17 @@
-# HaploPhen
+# HapPyNet
 
-Association of haplotype blocks to phenotypes using machine learning methods
+## Test Data
 
-A tool to test the association of variants in haplotype blocks to phenotypes.
-This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPArrays in VCF format and generates association test results
+This folder contains information about the test data set used to validate the HapPyNet program
 
-![alt text](docs/images/concept.png)
+## SRR_lists
+RNAseq data (from [SRA](https://www.ncbi.nlm.nih.gov/sra)) for [50 AML](SRR_lists/SRR_aml_candidate50.list) and [47 normal](SRR_lists/SRR_normal_candidate47.list) samples were considered for use when developing the method. Resource availability only allowed the complete pipeline to br run on [47 AML](SRR_lists/SRR_aml_test47.list) and [30 normal](SRR_lists/SRR_normal_test30.list) samples during the NCBI Hackathon,
+  
+## SRR_runtables
+Complete runtable (from [SRA Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/) containing metadata for all 97 candidate samples considered for use. The relationship of total variant load per sample was compared to the MBases of sequence data available, and this is an important QC step.
 
-<p align="center">
-<img src="./docs/images/pipeline_0.png" height="300">
-</p>
+## test_counts
+Count files generated from strictly filtered VCFs for all 77 samples analyzed are provided
 
-## Usage
-
-   * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
-     See README [here](docs/README.md)
-   * Step 2 : Differential LD block SNP load between two classes (ex: disease vs. normal)
-
-## Method
-   * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
-   * Group variants by haplotype blocks to compute SNP load in each haplotype block
-   * Classify samples into disease vs normal, based on SNP load(number of SNPs per LD block) using a TensorFlow classifier
-   * Associate haplotypes with phenotype. As of Apr 2018, this is NOT implemented
-
-![alt text](docs/images/flow.png)
-
-## Data sources
-
-   * LD BLocks : Non-overlapping LD blocks derived from 1KG data (hg19) were obtained from : *Approximately independent linkage disequilibrium blocks in human populations,Bioinformatics. 2016 Jan 15; 32(2): 283–285 [doi:  10.1093/bioinformatics/btv546]*. Using NCBI's online remapping tool these regions were mapped to GRCh38 with merge fragments turned ON to make sure each LD block is not fragmented
-
-   * RNASeq samples: Initial training set from healthy and disease samples were obtained from SRA. The disease sample selection query was: (AML) AND "Homo sapiens"[orgn:__txid9606] NOT ChIP-Seq. The specific list of Sample IDs for AML and normal samples are in 
-
-## RNASeq Variant Calling Pipeline
-
-   * RNASeq sample reads were aligned using HiSat2
-   * Variants were called using GATK version
-   
-## Machine Learning
-
-   * We trained a classifier using TensorFlow 
-   * We are exploring standard differential gene expression methods from Bioconductor
-![alt text](docs/images/eset.png)
+## test_vcfs
+Examples VCFs are provided for 10 samples (5 AML, 5 normal) for use in validating the upstream variant-calling 

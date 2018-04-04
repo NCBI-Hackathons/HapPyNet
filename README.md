@@ -7,10 +7,6 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 ![alt text](docs/images/concept.png)
 
-<p align="center">
-<img src="./docs/images/pipeline_0.png" height="300">
-</p>
-
 ## Usage
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
      See README [here](docs/README.md)
@@ -27,13 +23,13 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 ## Data sources
 
-   * LD BLocks : Non-overlapping LD blocks derived from 1KG data (hg19) were obtained from : *Approximately independent linkage disequilibrium blocks in human populations,Bioinformatics. 2016 Jan 15; 32(2): 283–285 [doi:  10.1093/bioinformatics/btv546]*. Using NCBI's online remapping tool these regions were mapped to GRCh38 with merge fragments turned ON to make sure each LD block is not fragmented
+   * LD Blocks : Non-overlapping LD blocks derived from 1KG data (hg19) were obtained from : *Approximately independent linkage disequilibrium blocks in human populations,Bioinformatics. 2016 Jan 15; 32(2): 283–285 [doi:  10.1093/bioinformatics/btv546]*. Using NCBI's online remapping tool these regions were mapped to GRCh38 with merge fragments turned ON to make sure each LD block is not fragmented
 
-   * RNASeq samples: Initial training set from healthy and disease samples were obtained from SRA. The disease sample selection query was: (AML) AND "Homo sapiens"[orgn:__txid9606] NOT ChIP-Seq. Here are the specific list of Sample IDs for AML (ref_data/SRR_50aml_small.list) and normal samples (ref_data/SRR_47normal_small.list)
+   * RNASeq samples: Initial training set from healthy and disease samples were obtained from SRA. The disease sample selection query was: `(AML) AND "Homo sapiens"[orgn:__txid9606] NOT ChIP-Seq`. List of SRR samples used are provided [here](test_data/SRR_lists)
 
 ## RNASeq Variant Calling Pipeline
 
-   * RNASeq sample reads were aligned using HiSat2
+   * RNASeq sample reads were aligned using [HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml)
    * Variants were called using [GATK version 4.0.3.0](https://github.com/broadinstitute/gatk/releases/download/4.0.3.0/gatk-4.0.3.0.zip)  and quality filtered at read depth of 50 and genotype quality of 90
 ![alt text](docs/images/VariantsvsCoverageDP50_GQ90.png)
 
