@@ -95,7 +95,11 @@ def combine_dfs(dfs):
     '''
     Renames column by filename and concatenates count columns from dfs.
     '''
-    dfs = [rename_column(d[1], 'count', d[0]) for d in dfs]
+    dfs = [
+        rename_column(d[1], 'count', d[0])
+        for d in dfs
+        if not d[1]['count'].isnull().all()
+    ]
     dfs = pd.concat(dfs, axis=1)
     return rename_column(
         dfs[[c for c in dfs.columns if 'count' in c]].reset_index(),
