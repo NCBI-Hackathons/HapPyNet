@@ -1,9 +1,9 @@
-# HaploPhen
+# HapPyNet
 
-Association of haplotype blocks to phenotypes using machine learning methods
+Association of **Hap**lotype blocks to phenotypes using a neural **net**work machine learning method (in **Py**thon)
 
 A tool to test the association of variants in haplotype blocks to phenotypes.
-This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPArrays in VCF format and generates association test results
+This tool takes variants (VCF format) called by any technolgy like Exome, WGS, RNASeq or SNP Genotyping Arrays and generates association test results
 
 ![alt text](docs/images/concept.png)
 
@@ -34,7 +34,7 @@ This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPA
 ## RNASeq Variant Calling Pipeline
 
    * RNASeq sample reads were aligned using HiSat2
-   * Variants were called using GATK and quality filtered at read depth of 50 and genotype quality of 90
+   * Variants were called using [GATK version 4.0.3.0](https://github.com/broadinstitute/gatk/releases/download/4.0.3.0/gatk-4.0.3.0.zip)  and quality filtered at read depth of 50 and genotype quality of 90
 ![alt text](docs/images/VariantsvsCoverageDP50_GQ90.png)
 
 ## Machine Learning
