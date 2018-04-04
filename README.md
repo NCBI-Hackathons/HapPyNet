@@ -7,10 +7,6 @@ This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPA
 
 ![alt text](docs/images/concept.png)
 
-<p align="center">
-<img src="./docs/images/pipeline_0.png" height="300">
-</p>
-
 ## Usage
 
    * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
