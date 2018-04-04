@@ -20,7 +20,7 @@ This tool takes variants called by any technolgy like Exome, WGS, RNASeq or SNPA
 ## Method
    * Call variants using any platform (RNASeq, Exome, Whole Genome or SNP Arrays)
    * Group variants by haplotype blocks to compute SNP load in each haplotype block
-   * Classify samples using a TensorFlow classifier
+   * Classify samples into disease vs normal, based on SNP load(number of SNPs per LD block) using a TensorFlow classifier
    * Associate haplotypes with phenotype. As of Apr 2018, this is NOT implemented
 
 ![alt text](docs/images/flow.png)
