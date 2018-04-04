@@ -34,6 +34,11 @@ def get_args():
         help='Tag appended to output count matrix file.',
         default=''
     )
+    parser.add_argument(
+        '-s', '--standardize',
+        help='Standardize count data by LD block.',
+        action='store_true'
+    )
     return parser.parse_args()
 
 
@@ -100,6 +105,13 @@ def combine_dfs(dfs):
     )
 
 
+def standardize_by_blocks(df):
+    '''
+    Returns zero-mean LD blocks.
+    '''
+    return df.apply(lambda x: (x - x.mean()) / x.std(), axis=1)
+
+
 def output_matrix(matrix, tag):
     name = 'haplo_phen_count_matrix{}.tsv'.format(tag)
     matrix.to_csv(name, sep='\t', index=False)
@@ -120,6 +132,9 @@ def main():
         logging.warn('No count files detected. Exiting.')
         sys.exit()
     matrix = combine_dfs(dfs)
+    if args.standardize:
+        matrix = standardize_by_blocks(matrix)
+        args.output_tag += '_standardized'
     output_matrix(matrix, args.output_tag)
 
 
