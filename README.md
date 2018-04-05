@@ -11,11 +11,17 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 [Slides](https://docs.google.com/presentation/d/1mDAG509Ws1NSq7yGIEN6PMi6xeDpaBfiUjAW1mVI2QU/edit#slide=id.g36ae1cf8e4_0_38) from our presentation at [UCSC NCBI Hackathon](https://ncbiinsights.ncbi.nlm.nih.gov/2018/03/02/ncbi-ucsc-genomics-hackathon-april-2018/)
 
+## Install
+  1. Clone the repo
+     * `git clone https://github.com/NCBI-Hackathons/HapPyNet.git`
+  2. Install dependencies (varies depending on input)
+     * Details [Dhere](docs/README.md#requirements) and [here](docs/README.ML.md#requirements)
+    
 ## Usage
-   * Step 1 : Generate SNP count matrix (Number of SNPs per LD block) \
-     See README [here](docs/README.md)
-   * Step 2 : Run a neural net to classify samples into disease vs. normal \
-     See README [here](docs/README.ML.md)
+   1. Generate SNP count matrix (Number of SNPs per LD block) \
+      See README [here](docs/README.md#usage)
+   2. Run a neural net to classify samples into disease vs. normal \
+      See README [here](docs/README.ML.md#usage)
 
 ![alt text](docs/images/concept.png)
 
