@@ -43,6 +43,7 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
    * RNASeq sample reads were aligned using [HiSat2](https://ccb.jhu.edu/software/hisat2/index.shtml)
    * Variants were called using [GATK version 4.0.3.0](https://github.com/broadinstitute/gatk/releases/download/4.0.3.0/gatk-4.0.3.0.zip)  and quality filtered at read depth of 50 and genotype quality of 90
+
 ![alt text](docs/images/VariantsvsCoverageDP50_GQ90.png)
 
 ![alt text](docs/images/median_diff_DP50_GQ90.png)
