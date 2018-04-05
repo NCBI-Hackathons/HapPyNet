@@ -15,7 +15,7 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
   1. Clone the repo
      * `git clone https://github.com/NCBI-Hackathons/HapPyNet.git`
   2. Install dependencies (varies depending on input)
-     * Details [Dhere](docs/README.md#requirements) and [here](docs/README.ML.md#requirements)
+     * Details [here](docs/README.md#requirements) and [here](docs/README.ML.md#requirements)
     
 ## Usage
    1. Generate SNP count matrix (Number of SNPs per LD block) \
@@ -35,7 +35,7 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 ## Data sources
 
-   * LD Blocks : Non-overlapping LD blocks derived from 1KG data (hg19) were obtained from : *Approximately independent linkage disequilibrium blocks in human populations,Bioinformatics. 2016 Jan 15; 32(2): 283–285 [doi:  10.1093/bioinformatics/btv546]*. Using NCBI's online remapping tool these regions were mapped to GRCh38 with merge fragments turned ON to make sure each LD block is not fragmented
+   * LD Blocks : Non-overlapping LD blocks derived from 1KG data (hg19) were obtained from : *Approximately independent linkage disequilibrium blocks in human populations, Bioinformatics. 2016 Jan 15; 32(2): 283–285 [doi:  10.1093/bioinformatics/btv546](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4731402/)*. Using NCBI's online remapping tool these regions were mapped to GRCh38 with merge fragments turned ON to make sure each LD block is not fragmented
 
    * RNASeq samples: Initial training set from healthy and disease samples were obtained from SRA. The disease sample selection query was: `(AML) AND "Homo sapiens"[orgn:__txid9606] NOT ChIP-Seq`. List of SRR samples used are provided [here](test_data/SRR_lists)
 
