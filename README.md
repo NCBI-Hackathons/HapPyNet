@@ -47,7 +47,7 @@ This tool takes variants (VCF format) called by any technolgy like Exome, WGS, R
 
 ## Results
 
-   Our classifier model showed a 99% cross validated accuracy!
+   Our classifier model trained on our test AML and normal samples showed a 99% cross validated accuracy!
 
 ## Next steps
    * Rerun on a large set of samples, with demographics and batch controlled normals
